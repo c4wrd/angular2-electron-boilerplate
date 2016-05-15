@@ -1,5 +1,5 @@
 {
-  "port": 8000,
+  "port": 3000,
   "files": ["./dist/**/*.{html,htm,css,js}"],
   "server": { "baseDir": "./dist/frontend" }
 }
