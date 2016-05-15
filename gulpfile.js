@@ -1,13 +1,13 @@
-var gulp = require('gulp'),  
+var gulp = require('gulp'),
     del = require('del'),
     sass = require("gulp-sass")
     runSeq = require('run-sequence');
 
-gulp.task('clean', function(){  
+gulp.task('clean', function(){
     return del('dist/frontend/**/*', {force:true});
 });
 
-gulp.task('copy:vendor', function(){  
+gulp.task('copy:vendor', function(){
     return gulp.src([
             "node_modules/es6-shim/es6-shim.min.js",
             "node_modules/reflect-metadata/Reflect.js",
@@ -27,12 +27,12 @@ gulp.task('copy:rxjs', function() {
         .pipe(gulp.dest('./dist/frontend/assets/js/vendor/rxjs'));
 });
 
-gulp.task('copy:index', function(){  
+gulp.task('copy:index', function(){
     return gulp.src('./src/frontend/index.html')
         .pipe(gulp.dest('./dist/frontend'));
 });
 
-gulp.task('copy:systemconfig', function(){  
+gulp.task('copy:systemconfig', function(){
     return gulp.src('./src/frontend/systemjs.config.js')
         .pipe(gulp.dest('./dist/frontend/assets/js'));
 });
@@ -49,16 +49,18 @@ gulp.task('transpile:sass', function() {
 });
 
 gulp.task("sass:watch", function() {
-   gulp.watch('./src/frontend/scss/**/*.scss',['transpile:sass']); 
+   gulp.watch('./src/frontend/scss/**/*.scss',['transpile:sass']);
 });
 
-gulp.task('frontend', function(done){  
-    return runSeq('clean', 
-    ['copy:vendor', 
-    'copy:index', 
-    'copy:systemconfig', 
+gulp.task('build', function(done){
+    return runSeq('clean',
+    ['copy:vendor',
+    'copy:index',
+    'copy:systemconfig',
     'copy:assets',
     'copy:angular',
     'copy:rxjs',
     'transpile:sass'], done);
 })
+
+gulp.task('default', ['build']);

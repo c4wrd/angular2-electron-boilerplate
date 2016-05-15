@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "gulpfile.js",
   "scripts": {
-    "build": "gulp frontend && tsc",
+    "build": "gulp build && tsc",
     "start": "npm run build && concurrently \"npm run tsc:w\" \"npm run lite\" \"npm run sasswatch\"",
     "lite": "lite-server",
     "postinstall": "typings install",
