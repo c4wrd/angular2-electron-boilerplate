@@ -6,40 +6,32 @@ var gulp = require('gulp'),
     shell = require('gulp-shell'),
     runSeq = require('run-sequence');
 
-gulp.task('frontend:clean', function(){
-    return del('dist/frontend/**/*', {force:true});
+gulp.task('electron:clean', function(){
+    return del('dist/**/*', {force:true});
 });
 
-gulp.task('frontend:copy', () => {
+gulp.task('electron:copy', () => {
   var fssetup = [
     {
       from: [
-          "node_modules/es6-shim/es6-shim.min.js",
-          "node_modules/reflect-metadata/Reflect.js",
-          "node_modules/systemjs/dist/system.src.js",
-          "node_modules/zone.js/dist/zone.js"
+          "./node_modules/es6-shim/es6-shim.min.js",
+          "./node_modules/reflect-metadata/Reflect.js",
+          "./node_modules/systemjs/dist/system.src.js",
+          "./node_modules/zone.js/dist/zone.js"
       ],
-      to: "./dist/frontend/assets/js/vendor"
+      to: "./dist/assets/js/vendor"
     },
     {
-      from: "node_modules/@angular/**/*",
-      to: "./dist/frontend/assets/js/vendor/@angular"
+      from: "./node_modules/@angular/**/*",
+      to: "./dist/assets/js/vendor/@angular"
     },
     {
-      from: "node_modules/rxjs/**/*",
-      to: "./dist/frontend/assets/js/vendor/rxjs"
+      from: "./node_modules/rxjs/**/*",
+      to: "./dist/assets/js/vendor/rxjs"
     },
     {
-      from: './src/frontend/index.html',
-      to: './dist/frontend'
-    },
-    {
-      from: './src/frontend/systemjs.config.js',
-      to: './dist/frontend/assets/js'
-    },
-    {
-      from: './src/frontend/assets',
-      to: './dist/frontend'
+      from: ['./src/**/*', '!./src/assets/scss/*'],
+      to: './dist'
     }
   ];
 
@@ -48,49 +40,20 @@ gulp.task('frontend:copy', () => {
   });
 });
 
-gulp.task('frontend:transpile:sass', function() {
-     gulp.src('./src/frontend/scss/**/*.scss')
+gulp.task('electron:transpile:sass', function() {
+     gulp.src('./src/**/*.scss')
         .pipe(sass().on('error', sass.logError))
-        .pipe(gulp.dest('./dist/frontend/assets/css/'));
+        .pipe(gulp.dest('./dist'));
 });
-
-gulp.task('frontend:transpile:ts', shell.task(['tsc']));
 
 gulp.task("sass:watch", function() {
-   gulp.watch('./src/frontend/scss/**/*.scss',['frontend:transpile:sass']);
+   gulp.watch('./src/scss/**/*.scss',['electron:transpile:sass']);
 });
 
-gulp.task('frontend:build', function(done){
-    return runSeq('frontend:clean', 'frontend:copy', 'frontend:transpile:sass', 'frontend:transpile:ts', done);
-});
+gulp.task('electron:transpile:ts', shell.task(['tsc']));
 
-gulp.task('electron:clean', function(){
-    return del('dist/electron-package/**/*', {force: true});
-});
-
-gulp.task('electron:copy', function() {
-  var fssetup = [
-    {
-      from: "./src/electron/package.json",
-      to: "./dist/electron-package"
-    },
-    {
-      from: "./src/electron/index.js",
-      to: "./dist/electron-package"
-    },
-    {
-      from: "./dist/frontend/**/*",
-      to: "dist/electron-package"
-    }
-  ];
-
-  return fssetup.map((setup) => {
-    return gulp.src(setup.from).pipe(gulp.dest(setup.to));
-  });
-});
-
-gulp.task('electron:build', function(done){
-    return runSeq('electron:clean', 'electron:copy', done);
+gulp.task("typescript:watch", function() {
+   gulp.watch('./src/**/*.ts',['electron:transpile:ts']);
 });
 
 gulp.task('electron:build:osx', function(){
@@ -117,13 +80,15 @@ gulp.task('electron:build:win', function(){
         .pipe(symdest('packages/win'));
 });
 
+gulp.task('electron:build', function(done){
+    return runSeq('electron:clean', 'electron:copy', 'electron:transpile:sass', 'electron:transpile:ts', done);
+});
+
 gulp.task('electron:package', (done) => {
   return runSeq('build',
     ['electron:build:win','electron:build:osx', 'electron:build:linux'], done);
 });
 
-gulp.task('build', function(done) {
-  return runSeq('frontend:build', 'electron:build', done)
-});
+gulp.task('build', ['electron:build']);
 
 gulp.task('default', ['build']);

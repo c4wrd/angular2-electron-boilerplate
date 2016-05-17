@@ -4,8 +4,7 @@
   "main": "gulpfile.js",
   "scripts": {
     "build": "gulp build",
-    "start": "npm run build && electron dist/electron-package",
-    "dev": "gulp dev",
+    "start": "npm run build && electron dist",
     "package": "npm run build && gulp electron:package",
     "postinstall": "typings install",
     "typings": "typings"
