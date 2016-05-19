@@ -1,15 +1,23 @@
 {
   "compilerOptions": {
-    "rootDir": "src",
     "target": "es5",
-    "outDir": "./dist",
-    "module": "system",
+    "rootDir": "src",
+    "outDir": "dist",
     "moduleResolution": "node",
-    "sourceMap": true,
+    "module": "commonjs",
+    "declaration": false,
+    "removeComments": true,
+    "noLib": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "removeComments": false,
-    "noImplicitAny": false
+    "sourceMap": true,
+    "pretty": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitUseStrict": false,
+    "noFallthroughCasesInSwitch": true
   },
   "exclude": [
     "node_modules",

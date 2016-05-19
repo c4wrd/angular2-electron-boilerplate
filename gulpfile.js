@@ -47,7 +47,7 @@ gulp.task('electron:transpile:sass', function() {
 });
 
 gulp.task("sass:watch", function() {
-   gulp.watch('./src/scss/**/*.scss',['electron:transpile:sass']);
+   gulp.watch('./src/**/*.scss',['electron:transpile:sass']);
 });
 
 gulp.task('electron:transpile:ts', shell.task(['tsc']));
