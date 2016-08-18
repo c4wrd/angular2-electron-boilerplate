@@ -30,6 +30,10 @@ gulp.task('electron:copy', () => {
       to: "./dist/assets/js/vendor/rxjs"
     },
     {
+      from: "node_modules/core-js/**/*",
+      to: "./dist/assets/js/vendor/core-js"
+    },
+    {
       from: ['./src/**/*', '!./src/assets/scss/*'],
       to: './dist'
     }
