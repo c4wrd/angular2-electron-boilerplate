@@ -3,6 +3,8 @@ const electron = require('electron'),
   app = electron.app,
   BrowserWindow = electron.BrowserWindow;
 
+const { ipcMain } = require('electron');
+
 var mainWindow = null;
 
 app.on('window-all-closed', function() {
@@ -18,4 +20,9 @@ app.on('ready', function() {
   mainWindow.on('closed', function() {
     mainWindow = null;
   });
+});
+
+ipcMain.on('message', (event, arg) => {
+  console.log(`Received ${arg}`);
+  event.sender.send("reply", "pong");
 });

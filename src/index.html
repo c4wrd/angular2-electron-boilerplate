@@ -21,6 +21,7 @@
     <!-- Let's have System.js load our boot.js file -->
     <script src="systemjs.config.js"></script>
     <script>
+        System.set('electron', System.newModule(require('electron')));
         System.import('app')
                 .then(null, console.error.bind(console));
     </script>
