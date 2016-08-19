@@ -75,7 +75,7 @@ gulp.task("typescript:watch", function() {
 gulp.task('electron:build:osx', function(){
     gulp.src(['dist/electron-package/**/*'])
         .pipe(electron({
-            version: '1.0.2',
+            version: '1.3.3',
             platform: 'darwin' }))
         .pipe(symdest('packages/osx'));
 });
@@ -83,7 +83,7 @@ gulp.task('electron:build:osx', function(){
 gulp.task('electron:build:linux', function(){
     gulp.src(['dist/electron-package/**/*'])
         .pipe(electron({
-            version: '1.0.2',
+            version: '1.3.3',
             platform: 'linux' }))
         .pipe(symdest('packages/linux'));
 });
@@ -91,7 +91,7 @@ gulp.task('electron:build:linux', function(){
 gulp.task('electron:build:win', function(){
     gulp.src(['dist/electron-package/**/*'])
         .pipe(electron({
-            version: '1.0.2',
+            version: '1.3.3',
             platform: 'win32' }))
         .pipe(symdest('packages/win'));
 });
