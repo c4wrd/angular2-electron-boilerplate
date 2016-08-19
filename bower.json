@@ -1,0 +1,25 @@
+{
+  "name": "angular2-boilerplate",
+  "description": "An easy to use Angular 2 boilerplate for Angular 2 RC1",
+  "main": "gulpfile.js",
+  "authors": [
+    "Cory Forward"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "Angular",
+    "Angular2",
+    "typescript"
+  ],
+  "homepage": "https://github.com/c4wrd/angular2-electron-boilerplate",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
+}

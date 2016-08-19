@@ -3,10 +3,9 @@
   // map tells the System loader where to look for things
   var map = {
       'app': 'app',
-      'rxjs': 'assets/js/vendor/rxjs',
-      'angular2-in-memory-web-api': 'assets/js/vendor/angular2-in-memory-web-api',
-      '@angular': 'assets/js/vendor/@angular',
-      '@angular2-material': 'assets/js/vendor/@angular2-material'
+      'rxjs': 'assets/vendor/rxjs',
+      'angular2-in-memory-web-api': 'assets/vendor/angular2-in-memory-web-api',
+      '@angular': 'assets/vendor/@angular'
   };
   // packages tells the System loader how to load when no filename and/or no extension
   var packages = {
@@ -32,7 +31,6 @@
     '@angular/platform-browser-dynamic',
     '@angular/router',
     '@angular/upgrade',
-    '@angular2-material',
     'core-js'
   ];
 
@@ -40,25 +38,6 @@
   packageNames.forEach(function(pkgName) {
     packages[pkgName] = { main: 'index.js', defaultExtension: 'js' };
   });
-
-/**
- Simplicity sake for Angular 2 Material
- **/
-
-var materialPkgs = [
-  'core',
-  'toolbar',
-  'icon',
-  'button',
-  'sidenav',
-  'list',
-  'card',
-  'input',
-];
-
-materialPkgs.forEach((pkg) => {
-  packages[`@angular2-material/${pkg}`] = {main: `${pkg}.js`};
-});
 
   var config = {
     map: map,

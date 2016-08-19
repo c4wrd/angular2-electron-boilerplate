@@ -19,25 +19,37 @@ gulp.task('electron:copy', () => {
           "./node_modules/systemjs/dist/system.src.js",
           "./node_modules/zone.js/dist/zone.js"
       ],
-      to: "./dist/assets/js/vendor"
+      to: "./dist/assets/vendor"
     },
     {
-      from: "./node_modules/@angular/**/*",
-      to: "./dist/assets/js/vendor/@angular"
-    },
-    {
-      from: "./node_modules/rxjs/**/*",
-      to: "./dist/assets/js/vendor/rxjs"
-    },
-    {
-      from: "node_modules/core-js/**/*",
-      to: "./dist/assets/js/vendor/core-js"
-    },
-    {
-      from: ['./src/**/*', '!./src/assets/scss/*'],
+      from: ['./src/**/*', '!./src/assets/scss/*', '!./src/**/*.ts'],
       to: './dist'
     }
   ];
+
+  var node_modules = [
+    '@angular',
+    'rxjs',
+    'core-js'
+  ]
+
+  node_modules.forEach((item) => {
+    fssetup.push({
+      from: `node_modules/${item}/**/*`,
+      to:  `./dist/assets/vendor/${item}`
+    })
+  });
+
+  var bower_packages = [
+    'bootstrap/dist'
+  ]
+
+  bower_packages.forEach((item) => {
+    fssetup.push({
+      from: `bower_components/${item}/**/*`,
+      to:  `./dist/assets/vendor/${item}`
+    })
+  });
 
   return fssetup.map((setup) => {
     return gulp.src(setup.from).pipe(gulp.dest(setup.to));
