@@ -5,3 +5,4 @@ node_modules
 .DS_Store
 packages
 bower_components
+.idea
