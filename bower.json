@@ -20,6 +20,7 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap": "^3.3.7"
+    "bootstrap": "^3.3.7",
+    "web-animations-js": "web-animations/web-animations-js#^2.2.2"
   }
 }
