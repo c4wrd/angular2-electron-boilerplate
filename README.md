@@ -8,9 +8,9 @@ Install
 
 Installing this boilerplate is extremely simple!
 
-`git clone https://github.com/c4wrd/angular2-electorn-boilerplate`
+`git clone https://github.com/c4wrd/angular2-electron-boilerplate`
 
-`cd angular2-boilerplate`
+`cd angular2-electron-boilerplate`
 
 `npm install`
 
@@ -19,7 +19,12 @@ That's it! You are now ready for development.
 Development Tools
 =================
 
-This boilerplate utilizes a few packages to ensure an automated and easy to use workflow with Angular 2. Here is a list of them and their purposes: - TypeScript: The language used in this project's development - tsconfig.json: Configuration for our TypeScript code. - typings.json: Typings used within the code, such as core-js - Gulp - Gulp is used as the primary build, development and packaging system. Generally you may not need to run any of the registered Gulp commands, instead you can just invoke straight as an npm script (i.e. `npm run build`). - Bower - Bower is used primarily for frontend CSS frameworks and may be used however you like. Currently it is only used for the Bootstrap used within the application, but this can easily be removed.
+This boilerplate utilizes a few packages to ensure an automated and easy to use workflow with Angular 2. Here is a list of them and their purposes: 
+- TypeScript: The language used in this project's development
+- tsconfig.json: Configuration for our TypeScript code.
+- typings.json: Typings used within the code, such as core-js
+- Gulp: Gulp is used as the primary build, development and packaging system. Generally you may not need to run any of the registered Gulp commands, instead you can just invoke straight as an npm script (i.e. `npm run build`).
+- Bower: Bower is used primarily for frontend CSS frameworks and may be used however you like. Currently it is only used for the Bootstrap used within the application, but this can easily be removed.
 
 You can find the source of the application in *src*.
 
