@@ -2,12 +2,18 @@
 
 var gulp = require('gulp'),
     del = require('del'),
-    electron = require('gulp-atom-electron'),
+    electron = require('electron-connect').server.create(),
     symdest = require('gulp-symdest'),
     sass = require('gulp-sass'),
     shell = require('gulp-shell'),
     config = require("./project-config"),
-    runSeq = require('run-sequence');
+    runSeq = require('run-sequence'),
+    newer = require('gulp-newer'),
+    ts = require('gulp-typescript'),
+    merge = require('merge2'),
+    tsProject = ts.createProject({
+        declaration: true, noExternalResolve: false, 
+        experimentalDecorators: true, moduleResolution: 'node'});
 
 /**
  * Cleans our distribution folder
@@ -60,12 +66,35 @@ gulp.task('electron:copy', () => {
 });
 
 /**
+ * Copies the following into the distribution folder:
+ *  1. NOT ANY Node modules! Use copy if you need them.
+ *  2. NOT ANY Bower packages! Use copy if you need them.
+ *  3. Any other remaining files in our `src`
+ *     directory
+ */
+gulp.task('electron:copy-newer-non-TS-sources', () => {
+    var fs_setup = [
+        { // copy assets from our source to distribution
+            from: ['./src/**/*', '!./src/**/*.scss', '!./src/**/*.ts'],
+            to: './dist'
+        }
+    ];
+
+    return fs_setup.map((setup) => {
+        return gulp.src(setup.from)
+            .pipe(newer({ map: (fn) => { return fn.replace('src', 'dist').replace('.ts', '.js'); } }))
+            .pipe(gulp.dest(setup.to));
+    });
+});
+
+/**
  * Transpiles our Sass classes into CSS and
  * places it in the matching folder hierarchy in
  * the distribution folder.
  */
 gulp.task('electron:transpile:sass', function () {
     gulp.src('./src/**/*.scss')
+        .pipe(newer({ map: (fn) => { return fn.replace('src', 'dist').replace('.scss', '.css'); } }))
         .pipe(sass().on('error', sass.logError))
         .pipe(gulp.dest('./dist'));
 });
@@ -85,11 +114,16 @@ gulp.task("sass:watch", function () {
 gulp.task('electron:transpile:ts', shell.task(['tsc']));
 
 /**
- * Watches our TypeScript files, invoking the `tsc` compiler
- * if changes are detected.
+ * Incrementally Transpiles new or changed TypeScript files to JavaScript files
  */
-gulp.task("typescript:watch", function () {
-    gulp.watch('./src/**/*.ts', ['electron:transpile:ts']);
+gulp.task('electron:transpile:ts-newer', function() {
+    let tsResult = gulp.src(['src/**/*.ts', 'typings/**/*.ts'])
+        .pipe(newer({ map: (fn) => { return fn.replace('src', 'dist').replace('.ts', '.js'); } }))
+        .pipe(ts(tsProject));
+    return merge([ // Merge the two output streams, so this task is finished when the IO of both operations are done.
+        tsResult.dts.pipe(gulp.dest('./typings')),
+        tsResult.js.pipe(gulp.dest('./dist'))
+    ]);
 });
 
 /**
@@ -147,5 +181,34 @@ gulp.task('electron:package', (done) => {
 });
 
 gulp.task('build', ['electron:build']);
+
+gulp.task('start', function () {
+  // Start browser process
+    electron.start(['dist']);
+});
+
+gulp.task('electron:reload', function () {
+  // Start browser process
+    electron.reload();
+});
+gulp.task('reload', ['electron:reload']);
+
+gulp.task('livesourcesync', function () {
+  // Start browser process
+  electron.start(['dist']);
+
+  // Restart browser process (basically restart the whole thing)
+  //  gulp.watch('src/**', electron.restart);
+
+  // Reload renderer process
+  gulp.watch(['src/**.ts'], () => {
+      runSeq('electron:transpile:ts-newer', 'reload');
+  });
+  gulp.watch(['src/**', '!src/**.ts'], () => {
+      runSeq('electron:copy', 'reload');
+  });
+  
+});
+gulp.task('dev', ['livesourcesync']);
 
 gulp.task('default', ['build']);
