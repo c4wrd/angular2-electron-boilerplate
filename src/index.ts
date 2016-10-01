@@ -1,11 +1,12 @@
 'use strict';
+
 const electron = require('electron'),
   app = electron.app,
   BrowserWindow = electron.BrowserWindow;
 
 const { ipcMain } = require('electron');
 
-var mainWindow = null;
+var mainWindow : any = null;
 
 app.on('window-all-closed', function() {
   if (process.platform != 'darwin') {
