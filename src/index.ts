@@ -1,24 +1,24 @@
 'use strict';
 
-const electron = require('electron'),
-  app = electron.app,
-  BrowserWindow = electron.BrowserWindow;
+const electron : Electron.ElectronMainAndRenderer = require('electron');
+const app = electron.app;
+const BrowserWindow = electron.BrowserWindow;
 
-const { ipcMain } = require('electron');
+const ipcMain = electron.ipcMain;
 
-var mainWindow : any = null;
+var mainWindow : Electron.BrowserWindow = null;
 
-app.on('window-all-closed', function() {
+app.on('window-all-closed', () => {
   if (process.platform != 'darwin') {
     app.quit();
   }
 });
 
-app.on('ready', function() {
+app.on('ready', () => {
   mainWindow = new BrowserWindow({width: 800, height: 600});
   mainWindow.loadURL('file://' + __dirname + '/index.html');
   mainWindow.webContents.openDevTools();
-  mainWindow.on('closed', function() {
+  mainWindow.on('closed', () =>  {
     mainWindow = null;
   });
 });
