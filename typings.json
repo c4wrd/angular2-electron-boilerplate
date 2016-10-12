@@ -1,8 +1,9 @@
 {
+  "name": "angular2-boilerplate",
   "globalDependencies": {
-    "core-js": "registry:dt/core-js#0.0.0+20160602141332",
-    "github-electron": "registry:dt/github-electron#1.2.5+20160812193136",
+    "core-js": "registry:dt/core-js#0.0.0+20160914114559",
+    "github-electron": "github:DefinitelyTyped/DefinitelyTyped/github-electron/github-electron.d.ts#2c65d5ca7267fda6d49a3b447c8b089632fb5358",
     "jasmine": "registry:dt/jasmine#2.2.0+20160621224255",
-    "node": "registry:dt/node#6.0.0+20160807145350"
+    "node": "github:DefinitelyTyped/DefinitelyTyped/node/node.d.ts#2c65d5ca7267fda6d49a3b447c8b089632fb5358"
   }
 }
