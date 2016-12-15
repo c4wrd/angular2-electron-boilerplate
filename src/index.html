@@ -5,17 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-    <!-- 1. Load libraries -->
-     <!-- Polyfill(s) for older browsers -->
+  <!-- 
     <script src="assets/vendor/core-js/client/shim.min.js"></script>
     <script src="assets/vendor/zone.js/zone.js"></script>
-    <script src="assets/vendor/reflect-metadata/Reflect.js"></script>
-    <script src="assets/vendor/systemjs/system.src.js"></script>
-    <!-- 2. Configure SystemJS -->
-    <script src="systemjs.config.js"></script>
+  -->
     <script>
-        System.set('electron', System.newModule(require('electron')));
-      System.import('app').catch(function(err){ console.error(err); });
+      require("./index.ts");
     </script>
   </head>
   <!-- 3. Display the application -->

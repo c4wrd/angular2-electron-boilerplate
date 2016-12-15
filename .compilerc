@@ -1,0 +1,10 @@
+{
+  "env": {
+    "development": {
+      "text/typescript": {
+        "module": "commonjs",
+        "moduleResolution": "node"
+      }
+    }
+  }
+}

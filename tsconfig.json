@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "rootDir": "src",
     "outDir": "dist",
     "moduleResolution": "node",
     "module": "commonjs",
@@ -17,7 +16,8 @@
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitUseStrict": false,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": "."
   },
   "exclude": [
     "node_modules",
